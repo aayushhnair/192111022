@@ -1,13 +1,11 @@
-// src/Component/Home.js
 import React, { useEffect, useState } from 'react';
-import {ProductData} from '../API/constants';
+import { ProductData } from '../API/constants';
 import Product from '../Components/Product';
-import fetchDataWithToken, { fetchWithToken } from '../API/productAPI';
+import fetchDataWithToken from '../API/productAPI';
 
 const Home = () => {
   const [products, setProducts] = useState([]);
   const [data, setData] = useState(null);
-
 
   useEffect(() => {
     const fetchAPI = async () => {
@@ -20,22 +18,20 @@ const Home = () => {
     };
 
     fetchAPI();
-    
   }, []);
 
-  const prod = ProductData;
+  if (!data) {
+    return null; 
+  }
 
   return (
     <div className="product-list">
-        <h1>Product List</h1>
-        <p>{data}</p>
-      {prod.map((product, index) => (
+      <h1>Product List</h1>
+      {data.map((product, index) => (
         <Product key={index} product={product} />
       ))}
     </div>
   );
 };
-
-
 
 export default Home;
